@@ -1,5 +1,5 @@
 function saludar() {
-  alert("¡Hola José! Tu app está viva 🚀");
+  alert("¡Hola José! Tu app está conectada al Script.JS 🚀");
 }
 
 // Aquí registramos el service worker
