@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Calculadora del Herrero</title>
+    <title>Mi Calculadora del Herrero si funciona</title>
 </head>
 
 <body>
@@ -13,44 +13,40 @@
 
     <h2>Acanalado a 90°</h2>
 
-    <label>Medida final (mm):</label>
-    <!-- Se cambió a step="any" para permitir decimales exactos en el taller -->
-    <input type="number" id="medidaFinal" value="1000" step="any" onblur="verificarMedidaFinal()">
+    <label>Medida final:</label>
+   <input type="number" id="medidaFinal" value="1000" step="1" onkeydown="return event.key !== '.' && event.key !== ','" onblur="verificarMedidaFinal()">
     <br><br>
 
     <label>Canales:</label>
-    <input type="number" id="canales" value="3" step="1" onblur="verificarCanales()">
+   <input type="number" id="canales" value="3" step="1" onblur="verificarCanales()">
     <br><br>
 
-    <label>Profundidad (mm):</label>
-    <input type="number" id="profundidad" value="15" step="any" onblur="verificarProfundidad()">
+    <label>Profundidad:</label>
+  <input type="number" id="profundidad" value="15" onblur="verificarProfundidad()">
     <br><br>
 
-    <label>Bordes (mm):</label>
-    <input type="number" id="bordes" value="20" step="any" onblur="verificarBordes()">
+    <label>Bordes:</label>
+    <input type="number" id="bordes" value="20" onblur="verificarBordes()">
+
     <br><br>
 
-    <label>Espesor (mm):</label>
-    <input type="number" id="espesor" value="1" step="any" onblur="verificarEspesor()">
+    <label>Espesor:</label>
+   <input type="number" id="espesor" value="1" onblur="verificarEspesor()">
     <br><br>
 
     <button onclick="calcular()">Calcular</button>
 
-    <h3>Resultados</h3>
+    <h3>Resultado</h3>
 
-    <!-- Cambiados a mm para que el usuario sepa la unidad de medida -->
-    <p>Ancho de canal: <span id="anchoCanal">-</span> mm</p>
-    <p>Alto de canal: <span id="altoCanal">-</span> mm</p>
-    <p>Desarrollo total de lámina: <span id="desarrollo">-</span> mm</p>
+    <p>Ancho de canal: <span id="anchoCanal">-</span></p>
+    <p>Alto de canal: <span id="altoCanal">-</span></p>
+    <p>Desarrollo: <span id="desarrollo">-</span></p>
 
-    <div id="marcas">
-        <h3>Marcas de Trazado Ordenadas</h3>
-        <p><small>(Mide de corrido desde el inicio de la lámina)</small></p>
-        <div id="listaMarcas">-</div>
-    </div>
-
-    <!-- Asegúrate de que tu archivo de código en GitHub se llame exactamente calculos.js y esté dentro de la carpeta js -->
-    <script src="js/calculos.js"></script>
+       <div id="marcas">
+        <h3>Marcas</h3>
+        <div id="listaMarcas"></div>
+        </div>
+     <script src="js/calculos.js"></script>
 </body>
 
 </html>
