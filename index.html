@@ -1,56 +1,170 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Calculadora del Herrero si funciona</title>
+    <title>Calculadora del Herrero</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #d35400;
+            --bg: #f5f6fa;
+            --card: #ffffff;
+            --text: #333333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 {
+            color: var(--primary);
+            text-align: center;
+            margin-top: 0;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: var(--accent);
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: 600;
+            flex: 1;
+        }
+        input {
+            width: 120px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+            text-align: right;
+        }
+        input:disabled {
+            background-color: #e9ecef;
+            color: #6c757d;
+        }
+        button {
+            width: 100%;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #b33900;
+        }
+        .results-box {
+            background: #edf2f7;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 25px;
+        }
+        .results-box h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+        .results-box p {
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        .results-box span {
+            font-weight: bold;
+            color: var(--accent);
+        }
+        .marcas-box {
+            margin-top: 20px;
+            border-left: 4px solid var(--primary);
+            padding-left: 15px;
+        }
+        #listaMarcas {
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            line-height: 1.6;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+    </style>
 </head>
-
 <body>
 
-    <h1>Mi Calculadora del Herrero</h1>
+    <div class="container">
+        <h1>Mi Calculadora del Herrero</h1>
+        <h2>Acanalado a 90°</h2>
 
-    <h2>Acanalado a 90°</h2>
-
-    <label for="anchoPlancha">Ancho de plancha:</label>
-    <input type="number" id="anchoPlancha"value="1200" step="1" onkeydown="return event.key !== '.' && event.key !== ','" onblur="verificarMedidaPlancha()">
-    <br><br>
-    
-    <label>Medida final:</label>
-   <input type="number" id="medidaFinal" value="1000" step="1" onkeydown="return event.key !== '.' && event.key !== ','" onblur="verificarMedidaFinal()">
-    <br><br>
-
-    <label>Canales:</label>
-   <input type="number" id="canales" value="3" step="1" onblur="verificarCanales()">
-    <br><br>
-
-    <label>Profundidad:</label>
-  <input type="number" id="profundidad" value="15" onblur="verificarProfundidad()">
-    <br><br>
-
-    <label>Bordes:</label>
-    <input type="number" id="bordes" value="20" onblur="verificarBordes()">
-
-    <br><br>
-
-    <label>Espesor:</label>
-   <input type="number" id="espesor" value="1" onblur="verificarEspesor()">
-    <br><br>
-
-    <button onclick="calcular()">Calcular</button>
-
-    <h3>Resultado</h3>
-
-    <p>Ancho de canal: <span id="anchoCanal">-</span></p>
-    <p>Alto de canal: <span id="altoCanal">-</span></p>
-    <p>Desarrollo: <span id="desarrollo">-</span></p>
-
-       <div id="marcas">
-        <h3>Marcas</h3>
-        <div id="listaMarcas"></div>
+        <div class="form-group">
+            <label for="anchoPlancha">Ancho de plancha (total):</label>
+            <input type="number" id="anchoPlancha" value="1200" step="1" onkeydown="return event.key !== '.' && event.key !== ','" onblur="verificarMedidaPlancha()">
         </div>
-     <script src="js/calculos.js"></script>
-</body>
+        
+        <div class="form-group">
+            <label for="medidaFinal">Medida final:</label>
+            <input type="number" id="medidaFinal" value="1000" step="1" onkeydown="return event.key !== '.' && event.key !== ','" onblur="verificarMedidaFinal()">
+        </div>
 
+        <div class="form-group">
+            <label for="canales">Canales:</label>
+            <input type="number" id="canales" value="3" step="1" onblur="verificarCanales()">
+        </div>
+
+        <div class="form-group">
+            <label for="profundidad">Profundidad:</label>
+            <input type="number" id="profundidad" value="15" onblur="verificarProfundidad()">
+        </div>
+
+        <div class="form-group">
+            <label for="bordes">Bordes:</label>
+            <input type="number" id="bordes" value="20" onblur="verificarBordes()">
+        </div>
+
+        <div class="form-group">
+            <label for="espesor">Espesor:</label>
+            <input type="number" id="espesor" value="1" onblur="verificarEspesor()">
+        </div>
+
+        <button onclick="calcular()">Calcular</button>
+
+        <div class="results-box">
+            <h3>Resultado</h3>
+            <p>Ancho de canal: <span id="anchoCanal">-</span></p>
+            <p>Alto de canal: <span id="altoCanal">-</span></p>
+            <p>Desarrollo total: <span id="desarrollo">-</span></p>
+
+            <div id="marcas" class="marcas-box">
+                <h3>Marcas de Plegado</h3>
+                <div id="listaMarcas">Aún sin calcular</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/calculos.js"></script>
+</body>
 </html>
