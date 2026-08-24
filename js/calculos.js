@@ -1,5 +1,6 @@
 function calcular() {
 
+     const medidaPlancha = Number(document.getElementById("medidaFinal").value);
     const medidaFinal = Number(document.getElementById("medidaFinal").value);
     const canales = Number(document.getElementById("canales").value);
     const profundidad = Number(document.getElementById("profundidad").value);
@@ -49,6 +50,8 @@ if (canales === 2) {
     listaMarcas += Math.round(marca) + "<br>";
 }
 // Borde final
+marca += anchoReducido;
+listaMarcas += Math.round(marca) + "<br>";
 marca += bordeReducido;
 listaMarcas += Math.round(marca);
 
