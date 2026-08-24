@@ -1,97 +1,88 @@
-function calcular() {
+// Variables globales de respaldo (valores iniciales por defecto)
+let ultimaMedidaPlancha = 1200;
+let ultimaMedidaFinal = 1000;
+let ultimaProfundidad = 15;
+let ultimoBorde = 20;
+let ultimoBordePositivo = 20;
 
-     const medidaPlancha = Number(document.getElementById("medidaFinal").value);
+function calcular() {
+    // CORREGIDO: Se obtiene correctamente el elemento anchoPlancha
+    const anchoPlancha = Number(document.getElementById("anchoPlancha").value);
     const medidaFinal = Number(document.getElementById("medidaFinal").value);
     const canales = Number(document.getElementById("canales").value);
     const profundidad = Number(document.getElementById("profundidad").value);
     const bordes = Number(document.getElementById("bordes").value);
     const espesor = Number(document.getElementById("espesor").value);
 
+    // Cálculos estructurales
     const anchoCanal = medidaFinal / canales;
     const altoCanal = profundidad;
 
-   const desarrollo = (bordes * 2) + medidaFinal + ((canales - 1) * profundidad) - (canales * 4 * espesor) + ((canales - 1) * espesor);
+    // Fórmula de desarrollo original provista
+    const desarrollo = (bordes * 2) + medidaFinal + ((canales - 1) * profundidad) - (canales * 4 * espesor) + ((canales - 1) * espesor);
     
-    
-    document.getElementById("anchoCanal").textContent = Math.round(anchoCanal);
+    // Inyección de resultados en pantalla
+    document.getElementById("anchoCanal").textContent = Math.round(anchoCanal) + " mm";
+    document.getElementById("altoCanal").textContent = Math.round(altoCanal) + " mm";
+    document.getElementById("desarrollo").textContent = Math.round(desarrollo) + " mm";
 
-    document.getElementById("altoCanal").textContent = Math.round(altoCanal);
-
-    document.getElementById("desarrollo").textContent = Math.round(desarrollo);
-
-//Ciclo de Marcas//
+    // --- Ciclo de Generación de Marcas ---
     let marca = bordes - espesor;
-let listaMarcas = Math.round(marca) + "<br>";
+    let listaMarcas = Math.round(marca) + " mm<br>";
 
-const anchoReducido = anchoCanal - (2 * espesor);
-const altoReducido = altoCanal - (2 * espesor);
-const bordeReducido = bordes - espesor;
+    const anchoReducido = anchoCanal - (2 * espesor);
+    const altoReducido = altoCanal - (2 * espesor);
+    const bordeReducido = bordes - espesor;
 
-// Primera sección
-marca += anchoReducido;
-listaMarcas += Math.round(marca) + "<br>";
+    // Primera sección
+    marca += anchoReducido;
+    listaMarcas += Math.round(marca) + " mm<br>";
 
-if (canales > 1) {
-    marca += altoReducido;
-    listaMarcas += Math.round(marca) + "<br>";
-}
+    if (canales > 1) {
+        marca += altoReducido;
+        listaMarcas += Math.round(marca) + " mm<br>";
+    }
 
-// Secciones intermedias
-for (let i = 2; i < canales; i++) {
+    // Secciones intermedias
+    for (let i = 2; i < canales; i++) {
+        marca += anchoCanal;
+        listaMarcas += Math.round(marca) + " mm<br>";
 
-   marca += anchoCanal;
-listaMarcas += Math.round(marca) + "<br>";
-
-marca += altoReducido;
-listaMarcas += Math.round(marca) + "<br>";
-}
-if (canales === 2) {
-    marca += anchoCanal;
-    listaMarcas += Math.round(marca) + "<br>";
-}
-// Borde final
-marca += anchoReducido;
-listaMarcas += Math.round(marca) + "<br>";
-marca += bordeReducido;
-listaMarcas += Math.round(marca);
-
-document.getElementById("listaMarcas").innerHTML = listaMarcas;
+        marca += altoReducido;
+        listaMarcas += Math.round(marca) + " mm<br>";
+    }
     
+    if (canales === 2) {
+        marca += anchoCanal;
+        listaMarcas += Math.round(marca) + " mm<br>";
+    }
+    
+    // Borde final
+    marca += anchoReducido;
+    listaMarcas += Math.round(marca) + " mm<br>";
+    marca += bordeReducido;
+    listaMarcas += Math.round(marca) + " mm";
+
+    document.getElementById("listaMarcas").innerHTML = listaMarcas;
 }
 
-    let ultimaProfundidad = 15;
+// --- Funciones de Verificación y Validación ---
 
-function verificarCanales() {
+function verificarMedidaPlancha() {
+    const campo = document.getElementById("anchoPlancha");
+    let valor = Number(campo.value);
 
-    let canales = Number(document.getElementById("canales").value);
-
-    canales = Math.floor(canales);
-    document.getElementById("canales").value = canales;
-
-    if (canales < 1) {
-        document.getElementById("canales").value = 1;
-        canales = 1;
+    if (campo.value === "" || valor < 1) {
+        alert("Debes ingresar una Medida de Plancha válida.");
+        campo.value = ultimaMedidaPlancha;
+        return;
     }
-
-    if (canales === 1) {
-
-        document.getElementById("profundidad").value = 0;
-        document.getElementById("profundidad").disabled = true;
-
-        document.getElementById("bordes").value = ultimoBordePositivo;
-
-    } else {
-
-        document.getElementById("profundidad").value = ultimaProfundidad;
-        document.getElementById("profundidad").disabled = false;
-
-        document.getElementById("bordes").value = ultimoBorde;
-    }
-
+    valor = Math.floor(valor);
+    campo.value = valor;
+    ultimaMedidaPlancha = valor;
 }
 
 function verificarMedidaFinal() {
-
     const campo = document.getElementById("medidaFinal");
     let valor = Number(campo.value);
 
@@ -103,38 +94,54 @@ function verificarMedidaFinal() {
 
     valor = Math.floor(valor);
     campo.value = valor;
+    ultimaMedidaFinal = valor; // Respalda el valor correcto actual
+}
+
+function verificarCanales() {
+    let canales = Number(document.getElementById("canales").value);
+
+    canales = Math.floor(canales);
+    document.getElementById("canales").value = canales;
+
+    if (canales < 1) {
+        document.getElementById("canales").value = 1;
+        canales = 1;
+    }
+
+    if (canales === 1) {
+        document.getElementById("profundidad").value = 0;
+        document.getElementById("profundidad").disabled = true;
+        document.getElementById("bordes").value = ultimoBordePositivo;
+    } else {
+        document.getElementById("profundidad").value = ultimaProfundidad;
+        document.getElementById("profundidad").disabled = false;
+        document.getElementById("bordes").value = ultimoBorde;
+    }
 }
 
 function verificarProfundidad() {
-
-    const profundidad = document.getElementById("profundidad").value;
+    const campo = document.getElementById("profundidad");
+    const profundidad = campo.value;
 
     if (profundidad === "" || Number(profundidad) < 1) {
         alert("Debes ingresar una profundidad válida.");
-        document.getElementById("profundidad").value = ultimaProfundidad;
+        campo.value = ultimaProfundidad;
         return;
     }
 
     ultimaProfundidad = Number(profundidad);
-
 }
 
-let ultimoBorde = 20;
-let ultimoBordePositivo = 20;
-
 function verificarBordes() {
-
     const campo = document.getElementById("bordes");
     const valor = campo.value;
     const canales = Number(document.getElementById("canales").value);
 
     if (valor === "") {
         campo.value = 0;
-
         if (canales > 1) {
             ultimoBorde = 0;
         }
-
         return;
     }
 
@@ -146,27 +153,23 @@ function verificarBordes() {
         return;
     }
 
-    // El valor es válido: guardar el nuevo valor
     ultimoBorde = numero;
 
     if (numero > 0) {
         ultimoBordePositivo = numero;
     }
 
-    // Con un solo canal, Bordes no puede ser 0
     if (canales === 1 && numero === 0) {
         campo.value = ultimoBordePositivo;
         ultimoBorde = 0;
     }
-
 }
-function verificarEspesor() {
 
+function verificarEspesor() {
     const campo = document.getElementById("espesor");
     const valor = campo.value;
 
     if (valor === "" || Number(valor) < 1) {
         campo.value = 1;
     }
-
 }
