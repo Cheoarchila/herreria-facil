@@ -1,9 +1,11 @@
 // Variables globales de respaldo (valores iniciales por defecto)
 let ultimaMedidaPlancha = 1200;
 let ultimaMedidaFinal = 1000;
+let ultimoCanalCantidad = 3; 
 let ultimaProfundidad = 15;
 let ultimoBorde = 20;
 let ultimoBordePositivo = 20;
+let ultimoEspesor = 1;      
 
 function calcular() {
     // Obtención de valores numéricos de los inputs
@@ -196,7 +198,7 @@ function verificarMedidaFinal() {
 
     valor = Math.floor(valor);
     campo.value = valor;
-    ultimaMedidaFinal = valor; // Respalda el valor correcto actual
+    ultimaMedidaFinal = valor; 
 }
 
 function verificarCanales() {
@@ -238,7 +240,6 @@ function verificarBordes() {
     const campo = document.getElementById("bordes");
     const valor = campo.value;
     const canales = Number(document.getElementById("canales").value);
-
     if (valor === "") {
         campo.value = 0;
         if (canales > 1) {
@@ -248,20 +249,18 @@ function verificarBordes() {
     }
 
     const numero = Number(valor);
-
     if (!Number.isInteger(numero) || numero < 0) {
         alert("Debes ingresar un valor de bordes válido.");
         campo.value = ultimoBorde;
         return;
     }
 
-    ultimoBorde = numero;
+ultimoBorde = numero;
 
     if (numero > 0) {
         ultimoBordePositivo = numero;
     }
-
-    if (canales === 1 && numero === 0) {
+    if (canales === 1 && numero === 0){
         campo.value = ultimoBordePositivo;
         ultimoBorde = 0;
     }
@@ -271,7 +270,14 @@ function verificarEspesor() {
     const campo = document.getElementById("espesor");
     const valor = campo.value;
 
-    if (valor === "" || Number(valor) < 1) {
-        campo.value = 1;
-    }
+if (valor === "" || Number(valor) < 1) {
+    campo.value = 1;
+}
+}
+
+function abrirPantalla(idPantalla) {
+    document.getElementById("pantallaInicio").classList.add("oculto");
+    document.getElementById("pantallaAcanalados").classList.add("oculto");
+    document.getElementById("pantalla90Grados").classList.add("oculto");
+    document.getElementById(idPantalla).classList.remove("oculto");
 }
