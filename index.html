@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Calculadora del Herrero si funciona</title>
-           <style>
+    <style>
         /* Alineación perfecta estilo tabla de control */
         #listaMarcas, #listaMarcas2 {
             font-family: monospace; /* Mantiene todos los caracteres del mismo ancho */
@@ -22,12 +22,27 @@
             font-weight: bold;
             color: #1e293b;      /* Color oscuro profesional */
         }
+
+        /* Estilos simples para los botones de navegación superiores */
+        .botones-navegacion {
+            margin-bottom: 20px;
+        }
+        .btn-nav {
+            padding: 6px 12px;
+            margin-right: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
     </style>
-
-
 </head>
 
 <body>
+
+    <!-- BOTONES DE ENTRADA AGREGADOS -->
+    <div class="botones-navegacion">
+        <button class="btn-nav" onclick="abrirPantalla('pantallaInicio')">← Menú Principal</button>
+        <button class="btn-nav" onclick="abrirPantalla('pantallaAcanalados')">← Acanalados</button>
+    </div>
 
     <h1>Mi Calculadora del Herrero</h1>
 
@@ -65,13 +80,12 @@
     <p>Alto de canal: <span id="altoCanal">-</span></p>
     <p>Desarrollo: <span id="desarrollo">-</span></p>
 
-        <div id="marcas">
+    <div id="marcas">
         <h3>Marcas</h3>
         <div id="listaMarcas"></div>
         <!-- AGREGA ESTA LÍNEA AQUÍ ABAJO -->
         <div id="listaMarcas2"></div>
     </div>
-
 
     <script src="js/calculos.js"></script>
 </body>
